@@ -27,7 +27,7 @@
 
   <script>
     async function loadWatch() {
-      const res = await fetch('http://localhost:5000/api/watch');
+      const res = await fetch('https://wahu-dazl.onrender.com/api/watch');
       const products = await res.json();
 
       const list = document.getElementById('watchList');
@@ -48,7 +48,7 @@
       const id = document.getElementById("productIdInput").value;
       if (!id) return alert("Enter Product ID");
 
-      const res = await fetch('http://localhost:5000/api/watch', {
+      const res = await fetch('https://wahu-dazl.onrender.com/api/watch', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ productId: id })
@@ -62,7 +62,7 @@
     async function deleteProduct(id) {
       if (!confirm("Remove from Watch category?")) return;
 
-      const res = await fetch(`http://localhost:5000/api/watch/${id}`, {
+      const res = await fetch(`https://wahu-dazl.onrender.com/api/watch/${id}`, {
         method: 'DELETE'
       });
 
