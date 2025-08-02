@@ -26,7 +26,7 @@
 
   <script>
     async function loadMobile() {
-      const res = await fetch('http://localhost:5000/api/mobile');
+      const res = await fetch('https://wahu-dazl.onrender.com/api/mobile');
       const products = await res.json();
 
       const list = document.getElementById('mobileList');
@@ -47,7 +47,7 @@
       const id = document.getElementById("productIdInput").value;
       if (!id) return alert("Enter Product ID");
 
-      const res = await fetch('http://localhost:5000/api/mobile', {
+      const res = await fetch('https://wahu-dazl.onrender.com/api/mobile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ productId: id })
@@ -61,7 +61,7 @@
     async function deleteProduct(id) {
       if (!confirm("Remove from Mobile category?")) return;
 
-      const res = await fetch(`http://localhost:5000/api/mobile/${id}`, {
+      const res = await fetch(`https://wahu-dazl.onrender.com/api/mobile/${id}`, {
         method: 'DELETE'
       });
 
