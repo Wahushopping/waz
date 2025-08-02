@@ -60,7 +60,7 @@
     });
 
     // Fetch trending products
-    fetch("http://localhost:5000/api/trending")
+    fetch("https://wahu-dazl.onrender.com/api/trending")
       .then(res => res.json())
       .then(products => {
         const list = document.getElementById("trendingProductsList");
@@ -77,7 +77,7 @@
 
     // Remove product from trending
     function removeTrending(id) {
-      fetch(`http://localhost:5000/api/trending/${id}`, {
+      fetch(`https://wahu-dazl.onrender.com/api/trending/${id}`, {
         method: "DELETE"
       })
       .then(res => res.json())
