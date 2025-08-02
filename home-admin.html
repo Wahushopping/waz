@@ -43,7 +43,7 @@
       e.preventDefault();
       const productId = document.getElementById("productId").value;
 
-      fetch("http://localhost:5000/api/homeappliance", {
+      fetch("https://wahu-dazl.onrender.com/api/homeappliance", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productId })
@@ -60,7 +60,7 @@
     });
 
     // Fetch Home Appliance Products
-    fetch("http://localhost:5000/api/homeappliance")
+    fetch("https://wahu-dazl.onrender.com/api/homeappliance")
       .then(res => res.json())
       .then(products => {
         const list = document.getElementById("homeApplianceProductsList");
@@ -77,7 +77,7 @@
 
     // Remove from Home Appliance
     function removeHomeAppliance(id) {
-      fetch(`http://localhost:5000/api/homeappliance/${id}`, {
+      fetch(`https://wahu-dazl.onrender.com/api/homeappliance/${id}`, {
         method: "DELETE"
       })
         .then(res => res.json())
