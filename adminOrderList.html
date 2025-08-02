@@ -40,7 +40,7 @@
   </body>
 
   <script>
-    fetch("http://localhost:5000/api/orders")
+    fetch("https://wahu-dazl.onrender.com/api/orders")
       .then(res => res.json())
       .then(orders => {
         const adminOrderList = document.getElementById("adminOrderList");
@@ -130,7 +130,7 @@
   const selectedStatus = document.getElementById(`status-${orderId}`).value;
   const deliveryDate = document.getElementById(`delivery-${orderId}`).value;
 
-  fetch(`http://localhost:5000/api/orders/${orderId}/status`, {
+  fetch(`https://wahu-dazl.onrender.com/api/orders/${orderId}/status`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
