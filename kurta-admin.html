@@ -43,7 +43,7 @@
       e.preventDefault();
       const productId = document.getElementById("productId").value;
 
-      fetch("http://localhost:5000/api/kurta", {
+      fetch("https://wahu-dazl.onrender.com/api/kurta", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productId })
@@ -60,7 +60,7 @@
     });
 
     // Fetch Kurta Products
-    fetch("http://localhost:5000/api/kurta")
+    fetch("https://wahu-dazl.onrender.com/api/kurta")
       .then(res => res.json())
       .then(products => {
         const list = document.getElementById("kurtaProductsList");
@@ -77,7 +77,7 @@
 
     // Remove from Kurta
     function removeKurta(id) {
-      fetch(`http://localhost:5000/api/kurta/${id}`, {
+      fetch(`https://wahu-dazl.onrender.com/api/kurta/${id}`, {
         method: "DELETE"
       })
         .then(res => res.json())
