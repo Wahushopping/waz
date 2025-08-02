@@ -26,7 +26,7 @@
 
   <script>
     async function loadSport() {
-      const res = await fetch('http://localhost:5000/api/sport');
+      const res = await fetch('https://wahu-dazl.onrender.com/api/sport');
       const products = await res.json();
 
       const list = document.getElementById('sportList');
@@ -47,7 +47,7 @@
       const id = document.getElementById("productIdInput").value;
       if (!id) return alert("Enter Product ID");
 
-      const res = await fetch('http://localhost:5000/api/sport', {
+      const res = await fetch('https://wahu-dazl.onrender.com/api/sport', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ productId: id })
@@ -61,7 +61,7 @@
     async function deleteProduct(id) {
       if (!confirm("Remove from Sport category?")) return;
 
-      const res = await fetch(`http://localhost:5000/api/sport/${id}`, {
+      const res = await fetch(`https://wahu-dazl.onrender.com/api/sport/${id}`, {
         method: 'DELETE'
       });
 
