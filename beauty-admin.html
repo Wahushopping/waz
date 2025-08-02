@@ -38,7 +38,7 @@
 
   <script>
     async function loadBeauty() {
-      const res = await fetch('http://localhost:5000/api/beauty');
+      const res = await fetch('https://wahu-dazl.onrender.com/api/beauty');
       const products = await res.json();
 
       const list = document.getElementById('beautyList');
@@ -59,7 +59,7 @@
       const id = document.getElementById("productIdInput").value;
       if (!id) return alert("Enter Product ID");
 
-      const res = await fetch('http://localhost:5000/api/beauty', {
+      const res = await fetch('https://wahu-dazl.onrender.com/api/beauty', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ productId: id })
@@ -73,7 +73,7 @@
     async function deleteProduct(id) {
       if (!confirm("Remove from Beauty category?")) return;
 
-      const res = await fetch(`http://localhost:5000/api/beauty/${id}`, {
+      const res = await fetch(`https://wahu-dazl.onrender.com/api/beauty/${id}`, {
         method: 'DELETE'
       });
 
