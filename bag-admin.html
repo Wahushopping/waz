@@ -41,7 +41,7 @@
 
                <script>
                               async function loadBags() {
-                                             const res = await fetch('http://localhost:5000/api/bags');
+                                             const res = await fetch('https://wahu-dazl.onrender.com/api/bags');
                                              const products = await res.json();
 
                                              const list = document.getElementById('bagList');
@@ -62,7 +62,7 @@
                                              const id = document.getElementById("productIdInput").value;
                                              if (!id) return alert("Enter Product ID");
 
-                                             const res = await fetch('http://localhost:5000/api/bags', {
+                                             const res = await fetch('https://wahu-dazl.onrender.com/api/bags', {
                                                             method: 'POST',
                                                             headers: { 'Content-Type': 'application/json' },
                                                             body: JSON.stringify({ productId: id })
@@ -76,7 +76,7 @@
                               async function deleteProduct(id) {
                                              if (!confirm("Remove from Bag category?")) return;
 
-                                             const res = await fetch(`http://localhost:5000/api/bags/${id}`, {
+                                             const res = await fetch(`https://wahu-dazl.onrender.com/api/bags/${id}`, {
                                                             method: 'DELETE'
                                              });
 
