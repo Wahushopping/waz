@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MiniShop</title>
+  <title>WahuShop</title>
   <link rel="stylesheet" href="admin.css" />
 </head>
 
@@ -169,7 +169,7 @@
           formData.append("video", videoInput.files[0]);
         }
 
-        fetch("http://localhost:5000/api/products/add", {
+        fetch("https://wahu-dazl.onrender.com/api/products/add", {
           method: "POST",
           body: formData
         })
@@ -183,7 +183,7 @@
       });
 
     function loadProducts() {
-  fetch("http://localhost:5000/api/products")
+  fetch("https://wahu-dazl.onrender.com/api/products")
     .then(res => res.json())
     .then(products => {
       if (!products.length) {
@@ -280,7 +280,7 @@
           const sizes = Array.from(sizeCheckboxes).map(cb => cb.value);
           updateData.append("sizes", JSON.stringify(sizes));
 
-          fetch(`http://localhost:5000/api/products/${p._id}`, {
+          fetch(`https://wahu-dazl.onrender.com/api/products/${p._id}`, {
             method: "PUT",
             body: updateData
           })
@@ -308,7 +308,7 @@
 
       window.deleteProduct = function (id) {
         if (!confirm("Are you sure?")) return;
-        fetch(`http://localhost:5000/api/products/${id}`, {
+        fetch(`https://wahu-dazl.onrender.com/api/products/${id}`, {
           method: "DELETE"
         })
           .then(res => res.json())
