@@ -38,7 +38,7 @@
 
   <script>
     async function loadBottomwear() {
-      const res = await fetch('http://localhost:5000/api/bottomwear');
+      const res = await fetch('https://wahu-dazl.onrender.com/api/bottomwear');
       const products = await res.json();
 
       const list = document.getElementById('bottomwearList');
@@ -59,7 +59,7 @@
       const id = document.getElementById("productIdInput").value;
       if (!id) return alert("Enter Product ID");
 
-      const res = await fetch('http://localhost:5000/api/bottomwear', {
+      const res = await fetch('https://wahu-dazl.onrender.com/api/bottomwear', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ productId: id })
@@ -73,7 +73,7 @@
     async function deleteProduct(id) {
       if (!confirm("Remove from Bottomwear category?")) return;
 
-      const res = await fetch(`http://localhost:5000/api/bottomwear/${id}`, {
+      const res = await fetch(`https://wahu-dazl.onrender.com/api/bottomwear/${id}`, {
         method: 'DELETE'
       });
 
