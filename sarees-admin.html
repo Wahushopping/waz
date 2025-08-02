@@ -42,7 +42,7 @@
       e.preventDefault();
       const productId = document.getElementById("productId").value;
 
-      fetch("http://localhost:5000/api/sarees", {
+      fetch("https://wahu-dazl.onrender.com/api/sarees", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productId })
@@ -60,7 +60,7 @@
 
     // Fetch Trending Products
    // Fetch Sarees Products
-fetch("http://localhost:5000/api/sarees")
+fetch("https://wahu-dazl.onrender.com/api/sarees")
   .then(res => res.json())
   .then(products => {
     const list = document.getElementById("sareesProductsList");
@@ -77,7 +77,7 @@ fetch("http://localhost:5000/api/sarees")
 
 // Correct Remove Function
 function removeSarees(id) {
-  fetch(`http://localhost:5000/api/sarees/${id}`, {
+  fetch(`https://wahu-dazl.onrender.com/api/sarees/${id}`, {
     method: "DELETE"
   })
     .then(res => res.json())
