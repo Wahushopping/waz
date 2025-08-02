@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Topwear Products Admin</title>
+  <link rel="stylesheet" href="catagory.css">
+</head>
+<body>
+  <header>
+    <div class="logo">Wahu Admin</div>
+    <nav>
+     <a href="admin.html">Deshboard</a>
+      <a href="shoes-admin.html">Shoes</a>
+      <a href="kid-admin.html">Kid</a>
+      <a href="bottomwear.admin.html">Bottomwear</a>
+      <a href="beauty-admin.html">Beauty</a>
+      <a href="electronics-admin.html">Electronics</a>
+      <a href="home-admin.html">Appliance</a>
+      <a href="bag-admin.html">Bags</a>
+      <a href="sarees-admin.html">Sarees</a>
+      <a href="cusual-admin.html">Cusual</a>
+      <a href="formal-admin.html">Formal</a>
+      <a href="kurta-admin.html">Kurta</a>
+      <a href="topwear-admin.html">Topwear</a>
+      <a href="trending-admin.html">Trending</a>
+      <a href="dress-admin.html">Dress</a>
+      <a href="adminOrderList.html">Order List</a>
+    </nav>
+  </header>
+
+  <h1>Manage Topwear Products</h1>
+
+  <form id="addTopwearForm">
+    <input type="text" id="productId" placeholder="Product ID" required />
+    <button type="submit">Add to Topwear</button>
+  </form>
+
+  <div id="topwearProductsList"></div>
+
+  <script>
+    // Add product to Topwear
+    document.getElementById("addTopwearForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const productId = document.getElementById("productId").value;
+
+      fetch("http://localhost:5000/api/topwear", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId })
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert("Product added to topwear!");
+          location.reload();
+        })
+        .catch(err => {
+          console.error(err);
+          alert("Error adding product to topwear.");
+        });
+    });
+
+    // Fetch and display Topwear products
+    fetch("http://localhost:5000/api/topwear")
+      .then(res => res.json())
+      .then(products => {
+        const list = document.getElementById("topwearProductsList");
+        list.innerHTML = products.map(p => `
+          <div style="border: 1px solid #ccc; padding: 10px; margin: 10px 0; display: flex; align-items: center; gap: 10px;">
+            <img src="${p.image}" alt="${p.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px;">
+            <div>
+              <p style="margin: 0;"><strong>${p.name}</strong></p>
+              <button onclick="removeTopwear('${p._id}')">Remove</button>
+            </div>
+          </div>
+        `).join("");
+      });
+
+    // Remove product from Topwear
+    function removeTopwear(id) {
+      fetch(`http://localhost:5000/api/topwear/${id}`, {
+        method: "DELETE"
+      })
+        .then(res => res.json())
+        .then(() => location.reload())
+        .catch(err => console.error(err));
+    }
+  </script>
+</body>
+</html>

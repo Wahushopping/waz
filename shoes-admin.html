@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Shoes Products Admin</title>
+  <link rel="stylesheet" href="catagory.css" />
+</head>
+
+<body>
+  <header>
+    <div class="logo">Wahu Admin</div>
+    <nav>
+      <a href="admin.html">Deshboard</a>
+      <a href="shoes-admin.html">Shoes</a>
+      <a href="kid-admin.html">Kid</a>
+      <a href="bottomwear.admin.html">Bottomwear</a>
+      <a href="beauty-admin.html">Beauty</a>
+      <a href="electronics-admin.html">Electronics</a>
+      <a href="home-admin.html">Appliance</a>
+      <a href="bag-admin.html">Bags</a>
+      <a href="sarees-admin.html">Sarees</a>
+      <a href="cusual-admin.html">Cusual</a>
+      <a href="formal-admin.html">Formal</a>
+      <a href="kurta-admin.html">Kurta</a>
+      <a href="topwear-admin.html">Topwear</a>
+      <a href="trending-admin.html">Trending</a>
+      <a href="dress-admin.html">Dress</a>
+      <a href="adminOrderList.html">Order List</a>
+
+    </nav>
+  </header>
+
+  <main>
+    <h1>Shoes Products</h1>
+    <input type="text" id="productIdInput" placeholder="Enter Product ID" />
+    <button onclick="addProduct()">Add Product to Shoes</button>
+
+    <div id="shoesList"></div>
+  </main>
+
+  <script>
+    async function loadShoes() {
+      const res = await fetch('http://localhost:5000/api/shoes');
+      const products = await res.json();
+
+      const list = document.getElementById('shoesList');
+      list.innerHTML = "";
+
+      products.forEach(p => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <img src="${p.image}" width="60" />
+
+          <div class="div17"><strong>${p.name}</strong> - ₹${p.price}<div>
+          <button onclick="deleteProduct('${p._id}')">Delete</button>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    async function addProduct() {
+      const id = document.getElementById("productIdInput").value;
+      if (!id) return alert("Enter Product ID");
+
+      const res = await fetch('http://localhost:5000/api/shoes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId: id })
+      });
+
+      const data = await res.json();
+      alert(data.message || data.error);
+      loadShoes();
+    }
+
+    async function deleteProduct(id) {
+      if (!confirm("Remove from Shoes category?")) return;
+
+      const res = await fetch(`http://localhost:5000/api/shoes/${id}`, {
+        method: 'DELETE'
+      });
+
+      const data = await res.json();
+      alert(data.message || data.error);
+      loadShoes();
+    }
+
+    // Load on start
+    loadShoes();
+  </script>
+</body>
+
+</html>

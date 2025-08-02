@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Watch Products Admin</title>
+  <link rel="stylesheet" href="catagory.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">Wahu Admin</div>
+    <nav>
+      <!-- Update only if you want to change nav -->
+      <a href="admin.html">Deshboard</a>
+      <a href="shoes-admin.html">Shoes</a>
+      <!-- other nav items -->
+      <a href="watch-admin.html">Watch</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Watch Products</h1>
+    <input type="text" id="productIdInput" placeholder="Enter Product ID" />
+    <button onclick="addProduct()">Add Product to Watch</button>
+
+    <div id="watchList"></div>
+  </main>
+
+  <script>
+    async function loadWatch() {
+      const res = await fetch('http://localhost:5000/api/watch');
+      const products = await res.json();
+
+      const list = document.getElementById('watchList');
+      list.innerHTML = "";
+
+      products.forEach(p => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <img src="${p.image}" width="60" />
+          <strong>${p.name}</strong> - ₹${p.price}
+          <button onclick="deleteProduct('${p._id}')">Delete</button>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    async function addProduct() {
+      const id = document.getElementById("productIdInput").value;
+      if (!id) return alert("Enter Product ID");
+
+      const res = await fetch('http://localhost:5000/api/watch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId: id })
+      });
+
+      const data = await res.json();
+      alert(data.message || data.error);
+      loadWatch();
+    }
+
+    async function deleteProduct(id) {
+      if (!confirm("Remove from Watch category?")) return;
+
+      const res = await fetch(`http://localhost:5000/api/watch/${id}`, {
+        method: 'DELETE'
+      });
+
+      const data = await res.json();
+      alert(data.message || data.error);
+      loadWatch();
+    }
+
+    // Load on start
+    loadWatch();
+  </script>
+</body>
+</html>

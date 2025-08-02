@@ -1,0 +1,74 @@
+<!-- admin-returns.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Return Requests - Admin</title>
+  <style>
+    .order-box { border: 1px solid #ccc; padding: 15px; margin: 15px 0; }
+    .item-box { margin-left: 15px; border-top: 1px solid #eee; padding-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Return Requests</h1>
+  <div id="returnsContainer">Loading...</div>
+
+  <script>
+    fetch("http://localhost:5000/api/orders/returns")
+      .then(res => res.json())
+      .then(orders => {
+        const container = document.getElementById("returnsContainer");
+        container.innerHTML = "";
+
+        orders.forEach(order => {
+          const orderDiv = document.createElement("div");
+          orderDiv.classList.add("order-box");
+
+          orderDiv.innerHTML = `
+            <p><strong>Order ID:</strong> ${order._id}</p>
+            <p><strong>User:</strong> ${order.address.name} (${order.address.phone})</p>
+            <p><strong>Address:</strong> ${order.address.fullAddress}, ${order.address.city}, ${order.address.pincode}</p>
+             <p>Total:<strong> ₹${order.total}</strong></p>
+            <p>Status:<strong> ${order.status}</strong></p>
+          `;
+
+          order.items.forEach(item => {
+            if (item.returnRequested) {
+              orderDiv.innerHTML += `
+                <div class="item-box">
+                  <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover;">
+                  <p><strong>Product:</strong> ${item.name}</p>
+                  <p style="margin: 0;">Reselling Company: ${item?.title || 'N/A'}</p>
+                  <p style="margin: 0;">Price: ₹${item.price}</p>
+                  <p><strong>Reason:</strong> ${item.returnReason}</p>
+                  <p><strong>Status:</strong> ${item.returnStatus || "Pending"}</p>
+                  <button onclick="updateReturnStatus('${order._id}', '${item._id}', true)">Approve</button>
+                  <button onclick="updateReturnStatus('${order._id}', '${item._id}', false)">Reject</button>
+                </div>
+              `;
+            }
+          });
+
+          container.appendChild(orderDiv);
+        });
+      });
+
+    function updateReturnStatus(orderId, itemId, approved) {
+      fetch(`http://localhost:5000/api/orders/${orderId}/return/${itemId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ approved })
+      })
+      .then(res => res.json())
+      .then(() => {
+        alert("Return updated");
+        location.reload();
+      })
+      .catch(err => {
+        console.error("Update failed:", err);
+        alert("Error updating return");
+      });
+    }
+  </script>
+</body>
+</html>

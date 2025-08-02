@@ -1,0 +1,394 @@
+/* Reset & global styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #f9f9f9;
+  color: #333;
+  padding-bottom: 50px;
+}
+a {
+  color: #333;
+  text-decoration: none;
+}
+a:hover {
+  color: #007bff;
+}
+
+/* Header and nav */
+header {
+    background-color: #01771b;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo {
+  color: bisque;
+  font-size: 24px;
+  font-weight: bold;
+  padding-left: 20px;
+}
+nav a {
+  color: #faefef;
+  margin-right: 5px;
+  font-weight: 100;
+  padding-right: 10px;
+}
+#userLinks {
+  font-weight: bold;
+}
+
+h2{
+  color: #ed4c02;
+  padding-top: 30px;
+}
+.admin-panel{
+  padding-top: 48px;
+}
+
+
+
+
+.div3 {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 20px;
+  padding-right: 20px;
+  padding: 20px;
+  column-gap: 10px;
+}
+
+.div1{
+  width: 600px;
+  text-align: center;
+ 
+}
+.div1 {
+  max-width: 400px;
+  padding: 7px;
+  background-color: #a5e4a3;
+  border: 2px solid #ade498;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.div1 label {
+ 
+  font-weight: bold;
+  margin-top: 15px;
+  display: block;
+  color: #333;
+}
+
+.div1 input[type="text"],
+.div1 input[type="number"] {
+  width: 100%;
+  height: 35px;
+  padding-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border 0.3s ease;
+}
+
+.div1 input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+
+
+
+.div2 {
+  width: 100%;
+  padding: 20px;
+  background-color: #e4a5a5;
+  border-radius: 10px;
+  
+}
+
+
+
+.div6{
+  display: flex;
+  flex-direction: row;
+}
+.div4{
+ width: 400px;
+ 
+
+}
+#option {
+  width: 300px;
+  height: 30px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+  margin-bottom: 15px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  transition: border 0.3s ease;
+}
+
+#option:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+input[type="file"] {
+  display: block;
+  margin-bottom: 15px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  font-size: 15px;
+  cursor: pointer;
+  width: 300px;
+}
+
+input[type="file"]::file-selector-button {
+  padding: 6px 12px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background-color: #0056b3;
+}
+
+.div5 {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+  margin: 15px 0;
+  padding: 10px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.div5 label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  padding: 4px 6px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.div5 label:hover {
+  background-color: #e9f5ff;
+  border-color: #007bff;
+}
+
+.div5 input[type="checkbox"] {
+  margin-right: 6px;
+  transform: scale(1.1);
+}
+
+
+
+
+.div7 {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+  margin: 15px 0;
+  padding: 10px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.div7 label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  padding: 4px 6px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.div7 label:hover {
+  background-color: #e9f5ff;
+  border-color: #007bff;
+}
+
+.div7 input[type="checkbox"] {
+  margin-right: 6px;
+  transform: scale(1.1);
+}
+
+
+
+.div8 {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+  margin: 15px 0;
+  padding: 10px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.div8 label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  padding: 4px 6px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.div8 label:hover {
+  background-color: #e9f5ff;
+  border-color: #007bff;
+}
+
+.div8 input[type="checkbox"] {
+  margin-right: 6px;
+  transform: scale(1.1);
+}
+h2{
+  background-color: #ee5ad5;
+  color: #000000;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+  border-radius: 7px;
+}
+textarea{
+              width: 600px;
+               height: 150px;
+               margin: 2px;
+               border-radius: 5px;
+               padding-left: 10px;   
+}
+button{
+              
+               background-color:#01771b;
+               border-radius: 5px;
+               color: #ffffff;
+               width: 250px;
+               height: 35px;
+               margin: 20px;
+}
+
+
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #eee;
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+  border-top: 1px solid #ccc;
+}
+
+h3{
+    background-color: #02094eb0;
+  color: #ffffff;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+  
+}
+#adminProductList{
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  
+}
+p{
+  color: #ed4c02;
+  padding: 20px;
+}
+
+/* General Layout */
+.content {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+.div14{
+  background-color: #ade498;
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  
+}
+
+.div15{
+ background-color: #e4a5a5;
+  display: flex;
+   flex-direction: row;
+}
+.div12{
+  
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+   
+}
+input{
+  height: 30px;
+  border-radius: 10px;
+  padding-left: 10px;
+}
+
+.div19{
+ background-color: #52354d;
+   display: flex;
+  flex-direction: row;
+  height: 60px;
+  border-radius: 20px;
+  
+}
+label{
+  color: #0056b3;
+}
+
+
+.div16 textarea{
+  width: 500px;
+  height: 90px;
+}

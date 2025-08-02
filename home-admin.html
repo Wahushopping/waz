@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home Appliance Products Admin</title>
+  <link rel="stylesheet" href="catagory.css">
+</head>
+<body>
+  <header>
+    <div class="logo">Wahu Admin</div>
+    <nav>
+      <a href="admin.html">Deshboard</a>
+      <a href="shoes-admin.html">Shoes</a>
+      <a href="kid-admin.html">Kid</a>
+      <a href="bottomwear.admin.html">Bottomwear</a>
+      <a href="beauty-admin.html">Beauty</a>
+      <a href="electronics-admin.html">Electronics</a>
+      <a href="home-admin.html">Appliance</a>
+      <a href="bag-admin.html">Bags</a>
+      <a href="sarees-admin.html">Sarees</a>
+      <a href="cusual-admin.html">Cusual</a>
+      <a href="formal-admin.html">Formal</a>
+      <a href="kurta-admin.html">Kurta</a>
+      <a href="topwear-admin.html">Topwear</a>
+      <a href="trending-admin.html">Trending</a>
+      <a href="dress-admin.html">Dress</a>
+      <a href="adminOrderList.html">Order List</a>
+    </nav>
+  </header>
+
+  <h1>Manage Home Appliance Products</h1>
+
+  <form id="addHomeApplianceForm">
+    <input type="text" id="productId" placeholder="Product ID" required />
+    <button type="submit">Add to Home Appliance</button>
+  </form>
+
+  <div id="homeApplianceProductsList"></div>
+
+  <script>
+    // Add product to Home Appliance
+    document.getElementById("addHomeApplianceForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const productId = document.getElementById("productId").value;
+
+      fetch("http://localhost:5000/api/homeappliance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId })
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert("Product added to Home Appliance!");
+          location.reload();
+        })
+        .catch(err => {
+          console.error(err);
+          alert("Error adding product to Home Appliance.");
+        });
+    });
+
+    // Fetch Home Appliance Products
+    fetch("http://localhost:5000/api/homeappliance")
+      .then(res => res.json())
+      .then(products => {
+        const list = document.getElementById("homeApplianceProductsList");
+        list.innerHTML = products.map(p => `
+          <div style="border: 1px solid #ccc; padding: 10px; margin: 10px 0; display: flex; align-items: center; gap: 10px;">
+            <img src="${p.image}" alt="${p.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px;">
+            <div>
+              <p style="margin: 0;"><strong>${p.name}</strong></p>
+              <button onclick="removeHomeAppliance('${p._id}')">Remove</button>
+            </div>
+          </div>
+        `).join("");
+      });
+
+    // Remove from Home Appliance
+    function removeHomeAppliance(id) {
+      fetch(`http://localhost:5000/api/homeappliance/${id}`, {
+        method: "DELETE"
+      })
+        .then(res => res.json())
+        .then(() => location.reload())
+        .catch(err => console.error(err));
+    }
+  </script>
+
+</body>
+</html>

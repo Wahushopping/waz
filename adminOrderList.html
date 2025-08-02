@@ -1,0 +1,162 @@
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <style>
+      svg[id^="barcode-"] {
+        margin-top: 10px;
+      }
+    </style>
+    <link rel="stylesheet" href="catagory.css" />
+  </head>
+
+  <body>
+
+     <header>
+    <div class="logo">Wahu</div>
+    <nav>
+     <a href="admin.html">Deshboard</a>
+     <a href="orderreturn.html">Return</a>
+      <a href="shoes-admin.html">Shoes</a>
+      <a href="kid-admin.html">Kid</a>
+      <a href="bottomwear.admin.html">Bottomwear</a>
+      <a href="beauty-admin.html">Beauty</a>
+      <a href="electronics-admin.html">Electronics</a>
+      <a href="home-admin.html">Appliance</a>
+      <a href="bag-admin.html">Bags</a>
+      <a href="sarees-admin.html">Sarees</a>
+      <a href="cusual-admin.html">Cusual</a>
+      <a href="formal-admin.html">Formal</a>
+      <a href="kurta-admin.html">Kurta</a>
+      <a href="topwear-admin.html">Topwear</a>
+      <a href="trending-admin.html">Trending</a>
+      <a href="dress-admin.html">Dress</a>
+      <a href="adminOrderList.html">Order List</a>
+    </nav>
+  </header>
+
+    <h2>All Orders</h2>
+    <div id="adminOrderList">Loading...</div>
+  </body>
+
+  <script>
+    fetch("http://localhost:5000/api/orders")
+      .then(res => res.json())
+      .then(orders => {
+        const adminOrderList = document.getElementById("adminOrderList");
+
+        if (!orders.length) {
+          adminOrderList.innerHTML = "<p>No orders found.</p>";
+          return;
+        }
+
+        adminOrderList.innerHTML = orders.map(order => `
+            <p><strong>Placed on:</strong> ${new Date(order.createdAt).toLocaleString()}</p>
+          <div id="order-${order._id}" style="border:1px solid #ddd; padding:10px; margin:10px 0;">
+            <p><strong>Order ID:</strong> ${order._id}</p>
+            <svg id="barcode-${order._id}"></svg>
+             <p>Placed On:<strong> ${new Date(order.createdAt).toLocaleString()}</strong></p>
+            <p>User:<strong> ${order.user?.name || 'Unknown'}</strong></p>
+            <p>Moible no:<strong> ${order.address?.phone || ''},</strong>
+              <p>Full Address:--<strong>${order.address?.fullAddress || ''}</strong></p>
+
+            
+            <p>Total:<strong> ₹${order.total}</strong></p>
+            <p>Discount:<strong> ${order.discount}</strong></p>
+            <p>Final Amount:<strong> ${order.finalAmount}</strong></p>
+            <p>Payment Method:<strong> ${order.paymentMethod}</strong></p>
+            <p>Status:<strong> ${order.status}</strong></p>
+
+            
+             
+
+            <label for="status-${order._id}">Update Status:</label>
+            <select id="status-${order._id}">
+              <option value="Ordered" ${order.status === 'Ordered' ? 'selected' : ''}>Ordered</option>
+               <option value="Packed" ${order.status === 'Packed' ? 'selected' : ''}>Packed</option>
+              <option value="Shipped" ${order.status === 'Shipped' ? 'selected' : ''}>Shipped </option>
+              <option value="Out for Delivery" ${order.status === 'Out for Delivery' ? 'selected' : ''}>Out for Delivery</option>
+              <option value="Delivered" ${order.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+
+              <option value="Return" ${order.status === 'Return' ? 'selected' : ''}>Return </option>
+              <option value="Cancel" ${order.status === 'Cancal' ? 'selected' : ''}>Cancel</option>
+              
+            </select>
+            <p><strong>Delivery Date:</strong> 
+  <input type="date" id="delivery-${order._id}" value="${order.deliveryDate ? new Date(order.deliveryDate).toISOString().split('T')[0] : ''}" />
+</p>
+
+            <button onclick="updateOrderStatus('${order._id}')">Update</button>
+             
+            <div style="margin-top: 10px;">
+              <strong>Items:</strong>
+              <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 5px;">
+                ${order.items.map(item => `
+                
+                  <div style="border: 1px solid #ccc; padding: 5px; display: flex; gap: 10px; align-items: center;">
+                    <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover;">
+                    <div>
+                      <p style="margin: 0;"><strong>${item.name}</strong></p>
+                      <p style="margin: 0;">Qty: ${item.qty}</p>
+                      <p style="margin: 0;">Price: ₹${item.price}</p>
+                      <p style="margin: 0;">Size: ${item?.size || 'N/A'}</p>
+                      <p style="margin: 0;">Reselling Company: ${item?.title || 'N/A'}</p>
+                    </div>
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+
+            <button onclick="downloadPDF('order-${order._id}')">Download PDF</button>
+          </div>
+        `).join("");
+
+        // 🔄 Render barcode after inserting HTML
+        orders.forEach(order => {
+          JsBarcode(`#barcode-${order._id}`, order._id, {
+            format: "CODE128",
+            width: 2,
+            height: 40,
+            displayValue: true
+          });
+        });
+
+      })
+      .catch(() => {
+        document.getElementById("adminOrderList").innerHTML = "<p>Error loading orders.</p>";
+      });
+
+    function updateOrderStatus(orderId) {
+  const selectedStatus = document.getElementById(`status-${orderId}`).value;
+  const deliveryDate = document.getElementById(`delivery-${orderId}`).value;
+
+  fetch(`http://localhost:5000/api/orders/${orderId}/status`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      status: selectedStatus,
+      deliveryDate: deliveryDate || null,
+    }),
+  })
+    .then(res => res.json())
+    .then(data => {
+      alert("Order status and delivery date updated.");
+      location.reload();
+    })
+    .catch(() => alert("Failed to update order."));
+}
+
+
+    function downloadPDF(orderId) {
+      const element = document.getElementById(orderId);
+      const opt = {
+        margin: 0.5,
+        filename: `${orderId}-details.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+      html2pdf().from(element).set(opt).save();
+    }
+  </script>
+</html>

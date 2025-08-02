@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MiniShop</title>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">Wahu</div>
+    <nav>
+      <a href="shoes-admin.html">Shoes</a>
+      <a href="mobile-admin.html">Mobile</a>
+      <a href="watch-admin.html">Watch</a>
+      <a href="sport-admin.html">Sport</a>
+      <a href="kid-admin.html">Kid</a>
+      <a href="bottomwear.admin.html">Bottomwear</a>
+      <a href="beauty-admin.html">Beauty</a>
+      <a href="electronics-admin.html">Electronics</a>
+      <a href="home-admin.html">Appliance</a>
+      <a href="bag-admin.html">Bags</a>
+      <a href="sarees-admin.html">Sarees</a>
+      <a href="cusual-admin.html">Cusual</a>
+      <a href="formal-admin.html">Formal</a>
+      <a href="kurta-admin.html">Kurta</a>
+      <a href="topwear-admin.html">Topwear</a>
+      <a href="trending-admin.html">Trending</a>
+      <a href="dress-admin.html">Dress</a>
+      <a href="adminOrderList.html">Order List</a>
+    </nav>
+  </header>
+
+  <div class="content">
+    <main class="admin-panel">
+      <h2>Add Product</h2>
+      <div class="div3">
+        <div class="div1">
+
+          <form id="productForm" enctype="multipart/form-data">
+            <label>Image URL</label>
+            <input type="text" id="image" placeholder="Main Image URL" required />
+
+            <label>Product Name</label>
+            <input type="text" id="name" placeholder="Product Name" required />
+
+            <label>Price</label>
+            <input type="number" id="price" placeholder="Price" required />
+
+            <label>Original Price</label>
+            <input type="number" id="originalprice" placeholder="Original Price" required />
+
+            <label>Reselling Company</label>
+            <input type="text" id="title" placeholder="Reselling Company" required />
+        </div>
+
+        <div class="div2">
+
+          <div class="div6">
+            <div class="div4">
+              <label>Title:</label>
+              <br>
+              <select id="option">
+                <option value="">Select Option</option>
+                <option value="Hot Deal">Hot Deal</option>
+                <option value="New Arrival">New Arrival</option>
+                <option value="Special Offer">Special Offer</option>
+                <option value="Limited time">Limited time</option>
+                <option value="Crazy Deal">Crazy Deal</option>
+                <option value="Tranding">Tranding</option>
+                <option value="Offer">Offer</option>
+                <option value="Bank Offer">Bank Offer</option>
+                <option value="Super Offer">Super Offer</option>
+                <option value="Special price">Special price</option>
+                <option value="Limited offer">Limited offer</option>
+                <option value="Get Coupon">Get Coupon</option>
+              </select>
+              <br>
+              <label>Image:</label>
+              <input type="file" id="moreImages" multiple accept="image/*" />
+              <br>
+              <label>Video:</label>
+              <input type="file" id="video" accept="video/mp4,video/webm" />
+              <button type="submit">Add Product</button>
+            </div>
+
+            <div class="div9">
+              <div class="div5">
+                <label><input type="checkbox" name="sizes" value="S"> S</label>
+                <label><input type="checkbox" name="sizes" value="M"> M</label>
+                <label><input type="checkbox" name="sizes" value="L"> L</label>
+                <label><input type="checkbox" name="sizes" value="XL"> XL</label>
+                <label><input type="checkbox" name="sizes" value="XXL"> XXL</label>
+              </div>
+
+              <div class="div7">
+                <label><input type="checkbox" name="sizes" value="5"> 5</label>
+                <label><input type="checkbox" name="sizes" value="6"> 6</label>
+                <label><input type="checkbox" name="sizes" value="7"> 7</label>
+                <label><input type="checkbox" name="sizes" value="8"> 8</label>
+                <label><input type="checkbox" name="sizes" value="9"> 9</label>
+              </div>
+              <div class="div8">
+                <label><input type="checkbox" name="sizes" value="26"> 26</label>
+                <label><input type="checkbox" name="sizes" value="28"> 28</label>
+                <label><input type="checkbox" name="sizes" value="30"> 30</label>
+                <label><input type="checkbox" name="sizes" value="32"> 32</label>
+                <label><input type="checkbox" name="sizes" value="34"> 34</label>
+                <label><input type="checkbox" name="sizes" value="36"> 36</label>
+                <label><input type="checkbox" name="sizes" value="38">38</label>
+                <label><input type="checkbox" name="sizes" value="40"> 40</label>
+                <label><input type="checkbox" name="sizes" value="Null"> Null</label>
+              </div>
+              <textarea id="description" placeholder="Description" rows="5"></textarea>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      </form>
+
+
+      <h3>All Products</h3>
+      <div id="adminProductList">Loading...</div>
+    </main>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const productForm = document.getElementById("productForm");
+      const productList = document.getElementById("adminProductList");
+
+      productForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById("name").value;
+        const price = document.getElementById("price").value;
+        const title = document.getElementById("title").value;
+        const originalprice = document.getElementById("originalprice").value;
+        const image = document.getElementById("image").value;
+        const description = document.getElementById("description").value;
+        const moreImagesInput = document.getElementById("moreImages");
+        const videoInput = document.getElementById("video");
+
+        const sizeCheckboxes = document.querySelectorAll('input[name="sizes"]:checked');
+        const sizes = Array.from(sizeCheckboxes).map(cb => cb.value);
+        const option = document.getElementById("option").value;
+
+        const formData = new FormData();
+        formData.append("option", option);
+        formData.append("name", name);
+        formData.append("title", title);
+        formData.append("price", price);
+        formData.append("originalprice", originalprice);
+        formData.append("image", image);
+        formData.append("description", description);
+        formData.append("sizes", JSON.stringify(sizes));
+
+        for (let file of moreImagesInput.files) {
+          formData.append("moreImages", file);
+        }
+
+        if (videoInput.files[0]) {
+          formData.append("video", videoInput.files[0]);
+        }
+
+        fetch("http://localhost:5000/api/products/add", {
+          method: "POST",
+          body: formData
+        })
+          .then(res => res.json())
+          .then(data => {
+            alert("Product added!");
+            productForm.reset();
+            loadProducts();
+          })
+          .catch(err => console.error(err));
+      });
+
+    function loadProducts() {
+  fetch("http://localhost:5000/api/products")
+    .then(res => res.json())
+    .then(products => {
+      if (!products.length) {
+        productList.innerHTML = "<p>No products found.</p>";
+        return;
+      }
+
+      productList.innerHTML = "";
+      products.forEach(p => {
+        const allSizes = ["S", "M", "L", "XL", "XXL", "5", "6", "7", "8", "9", "26", "28", "30", "32", "34", "36", "38", "40", "Null"];
+        const checkedSizes = Array.isArray(p.sizes) ? p.sizes : [];
+        const sizeCheckboxesHTML = allSizes.map(size => {
+          const checked = checkedSizes.includes(size) ? "checked" : "";
+          return `<label><input type="checkbox" name="sizes" value="${size}" ${checked}> ${size}</label>`;
+        }).join(" ");
+
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = `
+          <div style="margin-bottom: 20px;">
+            <p><strong>Product ID:</strong> ${p._id}</p>
+
+
+            <div class="div15">
+              <img src="${p.image}" alt="${p.name}" style="width: 150px; height:200px " />
+            
+              <div class="div12">
+                <form id="form-${p._id}">
+                  <label>Product Name</label>
+                  <input type="text" name="name" value="${p.name}" />
+                  <label>Price</label>
+                  <input type="number" name="price" value="${p.price}" />
+                  <label>Original Price</label>
+                  <input type="number" name="originalprice" value="${p.originalprice}" />
+                  <label>Image URL</label>
+                  <input type="text" name="image" value="${p.image}" />
+
+                  
+                  <div class="div14">
+                    ${sizeCheckboxesHTML}
+
+
+                    <div class="div19">
+                      <p>Reselling company</p>
+                      <input type="text" name="title" value="${p.title}" />
+                    
+
+                    
+                      <p>Title </p>
+                      <select name="option">
+                        <option value="">Select Option</option>
+                        <option value="Hot Deal" ${p.option === "Hot Deal" ? "selected" : ""}>Hot Deal</option>
+                        <option value="New Arrival" ${p.option === "New Arrival" ? "selected" : ""}>New Arrival</option>
+                        <option value="Special Offer" ${p.option === "Special Offer" ? "selected" : ""}>Special Offer</option>
+                        <option value="Limited time" ${p.option === "Limited time" ? "selected" : ""}>Limited time</option>
+                        <option value="Crazy Deal" ${p.option === "Crazy Deal" ? "selected" : ""}>Crazy Deal</option>
+                        <option value="Tranding" ${p.option === "Tranding" ? "selected" : ""}>Tranding</option>
+                        <option value="Offer" ${p.option === "Offer" ? "selected" : ""}>Offer</option>
+                        <option value="Bank Offer" ${p.option === "Bank Offer" ? "selected" : ""}>Bank Offer</option>
+                        <option value="Super Offer" ${p.option === "Super Offer" ? "selected" : ""}>Super Offer</option>
+                        <option value="Special price" ${p.option === "Special price" ? "selected" : ""}>Special price</option>
+                        <option value="Limited offer" ${p.option === "Limited offer" ? "selected" : ""}>Limited offer</option>
+                        <option value="Get Coupon" ${p.option === "Get Coupon" ? "selected" : ""}>Get Coupon</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="div16">
+                    <textarea name="description">${p.description}</textarea>
+                    <button type="submit">Update</button>
+                    <button type="button" onclick="deleteProduct('${p._id}')">Delete</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <hr />
+          </div>
+        `;
+
+        const form = wrapper.querySelector(`#form-${p._id}`);
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const formData = new FormData(form);
+          const updateData = new FormData();
+
+          updateData.append("option", formData.get("option"));
+          updateData.append("name", formData.get("name"));
+          updateData.append("title", formData.get("title"));
+          updateData.append("price", formData.get("price"));
+          updateData.append("originalprice", formData.get("originalprice"));
+          updateData.append("image", formData.get("image"));
+          updateData.append("description", formData.get("description"));
+
+          const sizeCheckboxes = form.querySelectorAll('input[name="sizes"]:checked');
+          const sizes = Array.from(sizeCheckboxes).map(cb => cb.value);
+          updateData.append("sizes", JSON.stringify(sizes));
+
+          fetch(`http://localhost:5000/api/products/${p._id}`, {
+            method: "PUT",
+            body: updateData
+          })
+            .then(res => res.json())
+            .then(data => {
+              alert("Product updated!");
+              loadProducts();
+            })
+            .catch(err => {
+              console.error("Update failed:", err);
+              alert("Failed to update product");
+            });
+        });
+
+        productList.appendChild(wrapper);
+      });
+    })
+    .catch(err => {
+      productList.innerHTML = "<p>Error loading products</p>";
+      console.error(err);
+    });
+}
+
+      
+
+      window.deleteProduct = function (id) {
+        if (!confirm("Are you sure?")) return;
+        fetch(`http://localhost:5000/api/products/${id}`, {
+          method: "DELETE"
+        })
+          .then(res => res.json())
+          .then(data => {
+            alert("Product deleted!");
+            loadProducts();
+          });
+      };
+
+      loadProducts();
+    });
+  </script>
+
+</body>
+
+</html>
