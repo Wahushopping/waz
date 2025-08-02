@@ -43,7 +43,7 @@
       e.preventDefault();
       const productId = document.getElementById("productId").value;
 
-      fetch("http://localhost:5000/api/topwear", {
+      fetch("https://wahu-dazl.onrender.com/api/topwear", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productId })
@@ -60,7 +60,7 @@
     });
 
     // Fetch and display Topwear products
-    fetch("http://localhost:5000/api/topwear")
+    fetch("https://wahu-dazl.onrender.com/api/topwear")
       .then(res => res.json())
       .then(products => {
         const list = document.getElementById("topwearProductsList");
@@ -77,7 +77,7 @@
 
     // Remove product from Topwear
     function removeTopwear(id) {
-      fetch(`http://localhost:5000/api/topwear/${id}`, {
+      fetch(`https://wahu-dazl.onrender.com/api/topwear/${id}`, {
         method: "DELETE"
       })
         .then(res => res.json())
