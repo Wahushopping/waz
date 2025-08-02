@@ -43,7 +43,7 @@
       e.preventDefault();
       const productId = document.getElementById("productId").value;
 
-      fetch("http://localhost:5000/api/dress", {
+      fetch("https://wahu-dazl.onrender.com/api/dress", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productId })
@@ -60,7 +60,7 @@
     });
 
     // Fetch Dress Products
-    fetch("http://localhost:5000/api/dress")
+    fetch("https://wahu-dazl.onrender.com/api/dress")
       .then(res => res.json())
       .then(products => {
         const list = document.getElementById("dressProductsList");
@@ -77,7 +77,7 @@
 
     // Remove Product from Dress
     function removeDress(id) {
-      fetch(`http://localhost:5000/api/dress/${id}`, {
+      fetch(`https://wahu-dazl.onrender.com/api/dress/${id}`, {
         method: "DELETE"
       })
         .then(res => res.json())
