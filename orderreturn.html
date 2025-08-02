@@ -14,7 +14,7 @@
   <div id="returnsContainer">Loading...</div>
 
   <script>
-    fetch("http://localhost:5000/api/orders/returns")
+    fetch("https://wahu-dazl.onrender.com/api/orders/returns")
       .then(res => res.json())
       .then(orders => {
         const container = document.getElementById("returnsContainer");
@@ -54,7 +54,7 @@
       });
 
     function updateReturnStatus(orderId, itemId, approved) {
-      fetch(`http://localhost:5000/api/orders/${orderId}/return/${itemId}`, {
+      fetch(`https://wahu-dazl.onrender.com/api/orders/${orderId}/return/${itemId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ approved })
