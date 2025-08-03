@@ -213,7 +213,7 @@
 
             <div class="div15">
               <img src="${p.image}" alt="${p.name}" style="width: 150px; height:200px " />
-            
+              <div>${moreImagesHTML}</div>
               <div class="div12">
                 <form id="form-${p._id}">
                   <label>Product Name</label>
@@ -281,6 +281,12 @@
           updateData.append("image", formData.get("image"));
           updateData.append("description", formData.get("description"));
 
+          const moreImagesInput = form.querySelector('#moreImages');
+          if (moreImagesInput && moreImagesInput.files.length > 0) {
+            for (let file of moreImagesInput.files) {
+              updateData.append("moreImages", file);
+            }
+          }
           const sizeCheckboxes = form.querySelectorAll('input[name="sizes"]:checked');
           const sizes = Array.from(sizeCheckboxes).map(cb => cb.value);
           updateData.append("sizes", JSON.stringify(sizes));
