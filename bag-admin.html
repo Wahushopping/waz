@@ -49,15 +49,24 @@
                                              list.innerHTML = "";
 
                                              products.forEach(p => {
-                                                            const div = document.createElement('div');
-                                                            div.innerHTML = `
+    // Handle more images (if available)
+    const baseURL = "https://wahu-dazl.onrender.com/uploads/"; // Adjust path if needed
+    const moreImagesHTML = p.moreImages
+      ? (Array.isArray(p.moreImages)
+          ? p.moreImages.map(img => `<img src="${baseURL}${img}" width="60" style="margin:3px; " />`).join("")
+          : `<img src="${baseURL}${p.moreImages}" width="60" style="margin:3px; " />`)
+      : "";
+
+        const div = document.createElement('div');
+        div.innerHTML = `
           <img src="${p.image}" width="60" />
+          ${moreImagesHTML}
           <strong>${p.name}</strong> - ₹${p.price}
           <button onclick="deleteProduct('${p._id}')">Delete</button>
         `;
-                                                            list.appendChild(div);
-                                             });
-                              }
+        list.appendChild(div);
+      });
+    }
 
                               async function addProduct() {
                                              const id = document.getElementById("productIdInput").value;
