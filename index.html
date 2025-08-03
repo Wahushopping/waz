@@ -199,12 +199,17 @@
           const checked = checkedSizes.includes(size) ? "checked" : "";
           return `<label><input type="checkbox" name="sizes" value="${size}" ${checked}> ${size}</label>`;
         }).join(" ");
-
+            const baseURL = "https://wahu-dazl.onrender.com/uploads/";
+        const moreImagesHTML = p.moreImages 
+          ? (Array.isArray(p.moreImages)
+              ? p.moreImages.map(img => `<img src="${baseURL}${img}" alt="More Image" style="width:100px; height:120px; margin:5px;" />`).join("")
+              : `<img src="${baseURL}${p.moreImages}" alt="More Image" style="width:100px; height:120px; margin:5px;" />`)
+          : "";
         const wrapper = document.createElement("div");
         wrapper.innerHTML = `
           <div style="margin-bottom: 20px;">
             <p><strong>Product ID:</strong> ${p._id}</p>
-
+           
 
             <div class="div15">
               <img src="${p.image}" alt="${p.name}" style="width: 150px; height:200px " />
